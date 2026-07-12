@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — আমাদের পার্টনার হোন</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap" id="ptRoot">
+  <div class="pt-hero reveal in">
+    <div class="ic">🤝</div>
+    <h1 data-i18n="pt_title"></h1>
+    <p data-i18n="pt_sub"></p>
+    <div class="pt-benefits">
+      <div class="reveal in"><span class="bi">👥</span><span data-i18n="pt_b1"></span></div>
+      <div class="reveal in" style="--d:.1s"><span class="bi">📦</span><span data-i18n="pt_b2"></span></div>
+      <div class="reveal in" style="--d:.2s"><span class="bi">⚡</span><span data-i18n="pt_b3"></span></div>
+    </div>
+  </div>
+
+  <div class="pt-form">
+    <div class="co-step reveal in">
+      <h3><span class="n">1</span> <span data-i18n="pt_s1"></span></h3>
+      <div class="field" id="fPName"><label data-i18n="pt_pname"></label><input id="inPName" data-i18n-ph="pt_pname_ph"><span class="err" data-i18n="pt_err_pname"></span></div>
+      <div class="field"><label><span data-i18n="pt_url"></span> <small style="color:var(--ink-3)">(Optional)</small></label><input id="inUrl" placeholder="https://example.com/your-product"></div>
+      <div class="field"><label data-i18n="pt_img"></label>
+        <div class="drop" id="drop">
+          <input type="file" id="inImg" accept="image/*" hidden>
+          <span id="dropInner"><span class="di">☁️</span><b data-i18n="pt_img_cta"></b><small>JPG, PNG, WebP · max 5MB</small></span>
+        </div>
+      </div>
+    </div>
+
+    <div class="co-step reveal in" style="--d:.08s">
+      <h3><span class="n">2</span> <span data-i18n="pt_s2"></span> <span class="off-live" id="offLive" style="display:none"></span></h3>
+      <div class="frow">
+        <div class="field" id="fMrp"><label data-i18n="pt_mrp"></label>
+          <div class="tk-input"><span class="pfx">৳</span><input id="inMrp" inputmode="decimal" placeholder="0.00"></div>
+          <span class="err" data-i18n="pt_err_price"></span></div>
+        <div class="field" id="fOffer"><label data-i18n="pt_offer"></label>
+          <div class="tk-input"><span class="pfx">৳</span><input id="inOffer" inputmode="decimal" placeholder="0.00"></div>
+          <span class="err" data-i18n="pt_err_offer"></span></div>
+      </div>
+      <div class="field" id="fStock"><label data-i18n="pt_stock"></label>
+        <input id="inStock" inputmode="numeric" data-i18n-ph="pt_stock_ph">
+        <span class="err" data-i18n="pt_err_stock"></span></div>
+    </div>
+
+    <div class="co-step reveal in" style="--d:.16s">
+      <h3><span class="n">3</span> <span data-i18n="pt_s3"></span></h3>
+      <div class="frow">
+        <div class="field" id="fSName"><label data-i18n="f_name"></label><input id="inSName" autocomplete="name"><span class="err" data-i18n="err_name"></span></div>
+        <div class="field" id="fSPhone"><label data-i18n="f_phone"></label><input id="inSPhone" inputmode="numeric" placeholder="01XXXXXXXXX" autocomplete="tel"><span class="err" data-i18n="err_phone"></span></div>
+      </div>
+      <div class="field" id="fSAddr"><label data-i18n="pt_addr"></label><textarea id="inSAddr" rows="3" data-i18n-ph="pt_addr_ph"></textarea><span class="err" data-i18n="err_addr"></span></div>
+    </div>
+
+    <button class="btn btn-primary btn-lg" style="width:100%" id="ptSubmit">📨 <span data-i18n="pt_submit"></span></button>
+    <div class="secure-note">🔒 <span data-i18n="pt_note"></span></div>
+  </div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('seller');
+applyI18n();
+
+/* image picker with preview */
+const drop = $('#drop'), inImg = $('#inImg');
+drop.onclick = () => inImg.click();
+['dragover', 'dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => {
+  e.preventDefault();
+  drop.classList.toggle('over', ev === 'dragover');
+  if (ev === 'drop' && e.dataTransfer.files[0]) preview(e.dataTransfer.files[0]);
+}));
+inImg.onchange = () => inImg.files[0] && preview(inImg.files[0]);
+function preview(file) {
+  if (file.size > 5 * 1024 * 1024) { toast('⚠️ Max 5MB'); return; }
+  const r = new FileReader();
+  r.onload = () => $('#dropInner').innerHTML = `<img src="${r.result}" alt=""><b>${file.name}</b><small>${t('pt_img_change')}</small>`;
+  r.readAsDataURL(file);
+}
+
+/* live discount badge */
+function updOff() {
+  const m = parseFloat($('#inMrp').value), o = parseFloat($('#inOffer').value);
+  const el = $('#offLive');
+  if (m > 0 && o > 0 && o < m) {
+    el.style.display = 'inline-flex';
+    el.textContent = `🔥 ${Math.round((1 - o / m) * 100)}% ${t('pt_off_live')}`;
+  } else el.style.display = 'none';
+}
+$('#inMrp').addEventListener('input', updOff);
+$('#inOffer').addEventListener('input', updOff);
+
+/* submit */
+$('#ptSubmit').onclick = () => {
+  let ok = true;
+  const mark = (id, bad) => { $(id).classList.toggle('bad', bad); if (bad) ok = false; };
+  const m = parseFloat($('#inMrp').value), o = parseFloat($('#inOffer').value);
+  mark('#fPName', !$('#inPName').value.trim());
+  mark('#fMrp', !(m > 0));
+  mark('#fOffer', !(o > 0 && o < (m || Infinity)));
+  mark('#fStock', !(parseInt($('#inStock').value) > 0));
+  mark('#fSName', !$('#inSName').value.trim());
+  mark('#fSPhone', !/^01\d{9}$/.test($('#inSPhone').value.trim()));
+  mark('#fSAddr', !$('#inSAddr').value.trim());
+  if (!ok) {
+    const bad = $('.field.bad input, .field.bad textarea');
+    bad?.scrollIntoView({ behavior: 'smooth', block: 'center' }); bad?.focus();
+    return;
+  }
+  const subs = JSON.parse(localStorage.getItem('sd_partner_subs') || '[]');
+  subs.push({ name: $('#inPName').value.trim(), mrp: m, offer: o, at: Date.now() });
+  localStorage.setItem('sd_partner_subs', JSON.stringify(subs));
+  $('#ptRoot').innerHTML = `
+    <div class="pt-done reveal in">
+      <div class="check-wrap"><svg viewBox="0 0 52 52"><path d="M14 27 L22 35 L38 18"/></svg></div>
+      <h1 style="font-size:1.6rem;font-weight:900">${t('pt_done_t')}</h1>
+      <p style="color:var(--ink-2);max-width:26rem;margin:10px auto 24px">${t('pt_done_p')}</p>
+      <a class="btn btn-primary" href="index.html">← ${t('sc_more')}</a>
+    </div>`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+};
+</script>
+</body>
+</html>

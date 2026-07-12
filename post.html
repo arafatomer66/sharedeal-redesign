@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal ব্লগ</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <article class="art" id="artRoot"></article>
+  <section class="section" style="padding-top:0">
+    <div class="section-head"><h2 data-i18n="related_posts"></h2></div>
+    <div class="blog-grid" style="padding:0 0 40px" id="relPosts"></div>
+  </section>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('blog');
+
+const slug = new URLSearchParams(location.search).get('slug') || BLOG[0].slug;
+const B = BLOG.find(b => b.slug === slug) || BLOG[0];
+document.title = (LANG === 'bn' ? B.tbn : B.ten) + ' — ShareDeal';
+
+$('#artRoot').innerHTML = `
+  <div class="crumbs" style="padding:0 0 14px"><a href="index.html">${t('crumb_home')}</a> › <a href="blog.html">${t('blog_title')}</a></div>
+  <div class="art-cover bcover g${B.grad} reveal in">${B.emoji}</div>
+  <h1>${LANG === 'bn' ? B.tbn : B.ten}</h1>
+  <div class="art-meta">
+    <span class="tag g">${LANG === 'bn' ? B.cat : B.catEn}</span>
+    <span>📅 ${LANG === 'bn' ? B.date : B.dateEn}</span>
+    <span>⏱ ${B.mins} ${t('blog_min')}</span>
+  </div>
+  <div class="art-body">${LANG === 'bn' ? B.bbn : B.ben}</div>
+  <div class="art-cta reveal">
+    <div><b>${t('blog_cta_t')}</b><p>${t('blog_cta_p')}</p></div>
+    <a class="btn" href="index.html#deals">🔥 ${t('cart_empty_cta')}</a>
+  </div>
+  <div class="art-share">
+    <span>${t('share_label')}:</span>
+    <a class="btn btn-sm" style="background:#25d366;color:#fff" target="_blank" rel="noopener"
+       href="https://wa.me/?text=${encodeURIComponent((LANG === 'bn' ? B.tbn : B.ten) + ' — https://sharedealnow.com/blogs/' + B.slug)}">WhatsApp</a>
+    <a class="btn btn-sm" style="background:#1877f2;color:#fff" target="_blank" rel="noopener"
+       href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://sharedealnow.com/blogs/' + B.slug)}">Facebook</a>
+    <button class="btn btn-ghost btn-sm" id="cpBtn">🔗 ${t('gm_copy')}</button>
+  </div>`;
+
+$('#cpBtn').onclick = () => {
+  navigator.clipboard?.writeText('https://sharedealnow.com/blogs/' + B.slug);
+  toast(`<span class="tick">✓</span> ${t('copied')}`);
+};
+
+/* related posts: same category first */
+const rel = BLOG.filter(b => b.slug !== B.slug).sort((a, b2) => (b2.cat === B.cat) - (a.cat === B.cat) ? 1 : -1).slice(0, 3);
+$('#relPosts').innerHTML = rel.map((b, i) => `
+  <a class="bcard reveal in" href="post.html?slug=${b.slug}">
+    <div class="bcover g${b.grad}"><span>${b.emoji}</span><span class="bcat">${LANG === 'bn' ? b.cat : b.catEn}</span></div>
+    <div class="bbody"><h3>${LANG === 'bn' ? b.tbn : b.ten}</h3>
+    <div class="bmeta"><span>⏱ ${b.mins} ${t('blog_min')}</span><span class="rd">${t('read_more')} →</span></div></div>
+  </a>`).join('');
+
+initReveals();
+</script>
+</body>
+</html>

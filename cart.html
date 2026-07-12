@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — কার্ট</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <h1 style="font-size:1.6rem;font-weight:900;padding-top:26px" data-i18n="cart_title"></h1>
+  <div id="cartRoot"></div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('');
+
+function render() {
+  const c = getCart();
+  const root = $('#cartRoot');
+
+  if (!c.length) {
+    root.innerHTML = `
+      <div class="empty reveal in">
+        <div class="big">🛒</div>
+        <h2 style="margin-bottom:8px">${t('cart_empty')}</h2>
+        <p style="color:var(--ink-2);margin-bottom:22px">${t('cart_empty_sub')}</p>
+        <a class="btn btn-primary" href="index.html#deals">🔥 ${t('cart_empty_cta')}</a>
+      </div>`;
+    return;
+  }
+
+  const T = cartTotals();
+  const freePct = Math.min(100, Math.round(T.sub / T.freeAt * 100));
+  const freeLeft = Math.max(0, T.freeAt - T.sub);
+
+  /* cross-sell: cheap add-ons not already in cart */
+  const inCart = new Set(c.map(i => i.id));
+  const xs = PRODUCTS.filter(p => !inCart.has(p.id) && p.price <= 120).slice(0, 8);
+
+  root.innerHTML = `
+  <div class="cart-layout">
+    <div>
+      <div class="freebar reveal in">
+        <div class="fb-txt">${T.delivery === 0
+          ? t('free_done')
+          : `🚚 ${t('free_prog')} <b>${tk(freeLeft)}</b> ${t('free_left')}`}</div>
+        <div class="gbar"><i style="width:${freePct}%"></i></div>
+      </div>
+
+      <div class="cart-list" id="cartList">
+        ${c.map((i, idx) => {
+          const p = prodById(i.id); if (!p) return '';
+          const d = dealByPid(i.id);
+          const unit = linePrice(i);
+          return `
+          <div class="citem" data-idx="${idx}">
+            <img src="${p.img}" alt="${p.name}">
+            <div>
+              <a class="cname" href="product.html?id=${p.id}">${p.name}</a>
+              <div><span class="cmode ${i.mode === 'group' ? 'grp' : 'solo'}">${i.mode === 'group' ? '👥 ' + t('group_mode') : '🙋 ' + t('solo_mode')}</span></div>
+              <div class="cprice">${tk(unit * i.qty)}${p.mrp > unit ? `<s>${tk(p.mrp * i.qty)}</s>` : ''}</div>
+            </div>
+            <div class="citem-right">
+              <div class="addwrap on" style="position:relative;width:110px">
+                <div class="qty"><button class="c-minus">−</button><b>${i.qty}</b><button class="c-plus">+</button></div>
+              </div>
+              <button class="rm">✕ ${t('remove')}</button>
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+
+      <div class="crosssell">
+        <h3>➕ ${t('xsell')}</h3>
+        <div class="xs-rail">${xs.map(productCardHTML).join('')}</div>
+      </div>
+    </div>
+
+    <div class="summary reveal in">
+      <h3>${t('sum_title')}</h3>
+      <div class="srow"><span>${t('sub_total')}</span><b>${tk(T.sub)}</b></div>
+      <div class="srow"><span>${t('delivery')}</span><b style="color:${T.delivery === 0 ? 'var(--green-700)' : 'inherit'}">${T.delivery === 0 ? t('free') : tk(T.delivery)}</b></div>
+      ${T.promo ? `<div class="srow"><span>Promo</span><b style="color:var(--green-700)">−${tk(T.promo)}</b></div>` : ''}
+      <div class="srow save"><span>💰 ${t('you_save')}</span><b id="saveAmt">${tk(T.save)}</b></div>
+      <div class="srow total"><span>${t('total')}</span><span>${tk(T.total)}</span></div>
+      <div class="promo">
+        <input id="promoIn" placeholder="${t('promo_ph')}" value="${sessionStorage.getItem('sd_promo_code') || ''}">
+        <button class="btn btn-ghost btn-sm" id="promoBtn">${t('apply')}</button>
+      </div>
+      <a class="btn btn-primary btn-lg" href="checkout.html">${t('to_checkout')} →</a>
+      <div class="secure-note">🔒 <span data-i18n="secure"></span></div>
+    </div>
+  </div>`;
+
+  /* qty +/- and remove with slide-out animation */
+  $$('#cartList .citem').forEach(row => {
+    const idx = Number(row.dataset.idx);
+    const item = getCart()[idx];
+    $('.c-plus', row).onclick = () => { setCartQty(item.id, item.mode, item.qty + 1); render(); };
+    $('.c-minus', row).onclick = () => {
+      if (item.qty - 1 <= 0) return removeRow(row, item);
+      setCartQty(item.id, item.mode, item.qty - 1); render();
+    };
+    $('.rm', row).onclick = () => removeRow(row, item);
+  });
+  function removeRow(row, item) {
+    row.classList.add('removing');
+    setTimeout(() => { setCartQty(item.id, item.mode, 0); toast(t('toast_removed')); render(); }, 300);
+  }
+
+  /* promo: SAVE50 = ৳50 off */
+  $('#promoBtn').onclick = () => {
+    const v = $('#promoIn').value.trim().toUpperCase();
+    if (v === 'SAVE50') {
+      sessionStorage.setItem('sd_promo', '50');
+      sessionStorage.setItem('sd_promo_code', v);
+      toast(`<span class="tick">✓</span> ${t('toast_promo')}`); render();
+    } else {
+      sessionStorage.removeItem('sd_promo'); sessionStorage.removeItem('sd_promo_code');
+      toast('😕 ' + t('toast_badpromo')); render();
+    }
+  };
+
+  bindAddControls(root);
+  initLazyImages(root);
+  $$('.reveal', root).forEach(el => el.classList.add('in'));
+  applyI18n(root);
+}
+
+render();
+</script>
+</body>
+</html>

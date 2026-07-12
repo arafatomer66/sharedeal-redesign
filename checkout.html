@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — চেকআউট</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <h1 style="font-size:1.6rem;font-weight:900;padding-top:26px" data-i18n="co_title"></h1>
+  <div class="co-layout" id="coRoot"></div>
+</div>
+
+<div class="co-sticky" id="coSticky"></div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('');
+
+if (!getCart().length) location.replace('cart.html');
+
+let slot = null, pay = 'cod';
+const saved = JSON.parse(localStorage.getItem('sd_customer') || '{}');
+
+function render() {
+  const T = cartTotals();
+  const c = getCart();
+  $('#coRoot').innerHTML = `
+  <div>
+    <!-- 1. contact -->
+    <div class="co-step reveal in">
+      <h3><span class="n">1</span> ${t('co_contact')}</h3>
+      <div class="frow">
+        <div class="field" id="fName"><label>${t('f_name')}</label><input id="inName" value="${saved.name || ''}" autocomplete="name"><span class="err">${t('err_name')}</span></div>
+        <div class="field" id="fPhone"><label>${t('f_phone')}</label><input id="inPhone" value="${saved.phone || (getUser()?.phone ?? '')}" inputmode="numeric" placeholder="01XXXXXXXXX" autocomplete="tel"><span class="err">${t('err_phone')}</span></div>
+      </div>
+    </div>
+
+    <!-- 2. address -->
+    <div class="co-step reveal in" style="--d:.08s">
+      <h3><span class="n">2</span> ${t('co_addr')}</h3>
+      <div class="frow">
+        <div class="field" id="fArea"><label>${t('f_area')}</label>
+          <select id="inArea"><option value="">—</option>${AREAS.map(a => `<option ${saved.area === a ? 'selected' : ''}>${a}</option>`).join('')}</select>
+          <span class="err">${t('err_area')}</span></div>
+        <div class="field" id="fAddr"><label>${t('f_address')}</label><input id="inAddr" value="${saved.addr || ''}" autocomplete="street-address"><span class="err">${t('err_addr')}</span></div>
+      </div>
+      <div class="field"><label>${t('f_note')}</label><input id="inNote"></div>
+    </div>
+
+    <!-- 3. slot -->
+    <div class="co-step reveal in" style="--d:.16s">
+      <h3><span class="n">3</span> ${t('co_slot')} <span class="err" id="slotErr" style="display:none;font-size:.75rem;color:var(--red);font-weight:600">· ${t('err_slot')}</span></h3>
+      <div class="slots">
+        <div class="slot ${new Date().getHours() >= 12 ? 'off' : ''}" data-slot="today-pm">${t('slot_today')}<small>3 PM – 6 PM</small></div>
+        <div class="slot" data-slot="tmrw-am">${t('slot_tmrw')}<small>9 AM – 12 PM</small></div>
+        <div class="slot" data-slot="tmrw-pm">${t('slot_tmrw')}<small>3 PM – 6 PM</small></div>
+      </div>
+    </div>
+
+    <!-- 4. payment -->
+    <div class="co-step reveal in" style="--d:.24s">
+      <h3><span class="n">4</span> ${t('co_pay')}</h3>
+      <div class="pay-opts">
+        <div class="pay-opt ${pay === 'cod' ? 'sel' : ''}" data-pay="cod"><span class="pi" style="background:var(--green-700)">COD</span><span><b>${t('pay_cod')}</b><small>${t('pay_cod_s')}</small></span><span class="radio"></span></div>
+        <div class="pay-opt ${pay === 'bkash' ? 'sel' : ''}" data-pay="bkash"><span class="pi" style="background:#e2136e">bKash</span><span><b>bKash</b><small>${t('pay_bkash_s')}</small></span><span class="radio"></span></div>
+        <div class="pay-opt ${pay === 'nagad' ? 'sel' : ''}" data-pay="nagad"><span class="pi" style="background:#f4820a">Nagad</span><span><b>Nagad</b><small>${t('pay_nagad_s')}</small></span><span class="radio"></span></div>
+        <div class="pay-opt ${pay === 'card' ? 'sel' : ''}" data-pay="card"><span class="pi" style="background:#1a3c8b">CARD</span><span><b>${t('pay_card')}</b><small>${t('pay_card_s')}</small></span><span class="radio"></span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- summary -->
+  <div class="summary reveal in" style="--d:.1s">
+    <h3>${t('sum_title')}</h3>
+    <div style="display:flex;flex-direction:column;gap:10px;max-height:230px;overflow:auto;margin-bottom:12px">
+      ${c.map(i => { const p = prodById(i.id); if (!p) return '';
+        return `<div style="display:flex;gap:10px;align-items:center;font-size:.85rem">
+          <img src="${p.img}" style="width:40px;height:40px;object-fit:contain" alt="">
+          <span style="flex:1">${p.name} <b style="color:var(--ink-3)">×${i.qty}</b>
+          ${i.mode === 'group' ? `<span class="cmode grp" style="font-size:.7rem;display:block">👥 ${t('group_mode')}</span>` : ''}</span>
+          <b>${tk(linePrice(i) * i.qty)}</b></div>`; }).join('')}
+    </div>
+    <div class="srow"><span>${t('sub_total')}</span><b>${tk(T.sub)}</b></div>
+    <div class="srow"><span>${t('delivery')}</span><b style="color:${T.delivery === 0 ? 'var(--green-700)' : 'inherit'}">${T.delivery === 0 ? t('free') : tk(T.delivery)}</b></div>
+    ${T.promo ? `<div class="srow"><span>Promo</span><b style="color:var(--green-700)">−${tk(T.promo)}</b></div>` : ''}
+    <div class="srow save"><span>💰 ${t('you_save')}</span><b>${tk(T.save)}</b></div>
+    <div class="srow total"><span>${t('total')}</span><span>${tk(T.total)}</span></div>
+    <button class="btn btn-primary btn-lg" id="placeBtn">🔒 ${t('place_order')} · ${tk(T.total)}</button>
+    <div class="secure-note">🔒 ${t('secure')} · ✅ ${t('t1')}</div>
+  </div>`;
+
+  $$('.slot:not(.off)').forEach(s => s.onclick = () => {
+    slot = s.dataset.slot;
+    $$('.slot').forEach(x => x.classList.toggle('sel', x === s));
+    $('#slotErr').style.display = 'none';
+  });
+  $$('.pay-opt').forEach(o => o.onclick = () => {
+    pay = o.dataset.pay;
+    $$('.pay-opt').forEach(x => x.classList.toggle('sel', x === o));
+  });
+  $('#placeBtn').onclick = placeOrder;
+
+  /* mobile sticky pay bar mirrors the summary CTA */
+  $('#coSticky').innerHTML = `
+    <div class="cs-tot"><b>${tk(T.total)}</b><span>💰 ${t('you_save')} ${tk(T.save)}</span></div>
+    <button class="btn btn-primary" id="coStickyBtn">🔒 ${t('place_order')}</button>`;
+  $('#coStickyBtn').onclick = placeOrder;
+}
+
+function placeOrder() {
+  let ok = true;
+  const name = $('#inName').value.trim();
+  const phone = $('#inPhone').value.trim();
+  const area = $('#inArea').value;
+  const addr = $('#inAddr').value.trim();
+  const mark = (id, bad) => { $(id).classList.toggle('bad', bad); if (bad) ok = false; };
+  mark('#fName', !name);
+  mark('#fPhone', !/^01\d{9}$/.test(phone));
+  mark('#fArea', !area);
+  mark('#fAddr', !addr);
+  if (!slot) { $('#slotErr').style.display = 'inline'; ok = false; }
+  if (!ok) {
+    const firstBad = $('.field.bad input, .field.bad select');
+    (firstBad || $('#slotErr')).scrollIntoView({ behavior: 'smooth', block: 'center' });
+    firstBad?.focus();
+    return;
+  }
+  /* remember the customer so repeat checkout is prefilled */
+  localStorage.setItem('sd_customer', JSON.stringify({ name, phone, area, addr }));
+  const T = cartTotals();
+  const order = {
+    id: 'SD' + String(Math.floor(100000 + Math.random() * 899999)),
+    total: T.total, save: T.save, pay, slot,
+    items: getCart(), at: Date.now()
+  };
+  localStorage.setItem('sd_last_order', JSON.stringify(order));
+  const hist = JSON.parse(localStorage.getItem('sd_orders') || '[]');
+  hist.push(order);
+  localStorage.setItem('sd_orders', JSON.stringify(hist));
+
+  const btn = $('#placeBtn');
+  const sbtn = $('#coStickyBtn'); if (sbtn) sbtn.disabled = true;
+  btn.disabled = true;
+  btn.innerHTML = `<span class="spin" style="display:inline-block;width:16px;height:16px;border:2.5px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;animation:sp .7s linear infinite"></span> ${t('placing')}`;
+  const st = document.createElement('style'); st.textContent = '@keyframes sp{to{transform:rotate(360deg)}}'; document.head.appendChild(st);
+
+  setTimeout(() => {
+    localStorage.removeItem('sd_cart');
+    sessionStorage.removeItem('sd_promo'); sessionStorage.removeItem('sd_promo_code');
+    location.href = 'success.html';
+  }, 1100);
+}
+
+render();
+applyI18n();
+</script>
+</body>
+</html>

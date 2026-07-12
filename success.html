@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — অর্ডার কনফার্মড</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="success" id="scRoot"></div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('');
+
+const order = JSON.parse(localStorage.getItem('sd_last_order') || 'null');
+if (!order) { location.replace('index.html'); throw new Error('no order'); }
+
+const eta = order && order.slot?.startsWith('today') ? (LANG === 'bn' ? 'আজ ৩টা–৬টা' : 'Today 3–6 PM') : (LANG === 'bn' ? 'আগামীকাল' : 'Tomorrow');
+const groupItems = (order?.items || []).filter(i => i.mode === 'group');
+
+$('#scRoot').innerHTML = `
+  <div class="check-wrap"><svg viewBox="0 0 52 52"><path d="M14 27 L22 35 L38 18"/></svg></div>
+  <h1>${t('sc_title')}</h1>
+  <p class="oid">${t('sc_sub')}: <b>#${order.id}</b> · ${t('sc_eta')}: <b>${eta}</b> · ${t('you_save')}: <b style="color:var(--green-700)">${tk(order.save)}</b></p>
+
+  <div class="timeline">
+    <div class="tl done"><span class="c">✓</span>${t('tl1')}</div>
+    <div class="tl now"><span class="c">📦</span>${t('tl2')}</div>
+    <div class="tl"><span class="c">🛵</span>${t('tl3')}</div>
+    <div class="tl"><span class="c">🏠</span>${t('tl4')}</div>
+  </div>
+
+  <div class="refer reveal in">
+    <h3>🎁 ${t('rf_title')}</h3>
+    <p>${t('rf_sub')}</p>
+    <div class="share-row">
+      <a class="btn btn-sm" style="background:#25d366;color:#fff" href="https://wa.me/?text=${encodeURIComponent('ShareDeal-এ আমার গ্রুপে যোগ দিন — পাইকারি দামে বাজার! https://sharedealnow.com?ref=' + order.id)}" target="_blank" rel="noopener">🟢 ${t('rf_wa')}</a>
+      <a class="btn btn-sm" style="background:#1877f2;color:#fff" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://sharedealnow.com?ref=' + order.id)}" target="_blank" rel="noopener">📘 ${t('rf_fb')}</a>
+      <button class="btn btn-dark btn-sm" id="copyRef">🔗 ${t('rf_copy')}</button>
+    </div>
+  </div>
+
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+    <a class="btn btn-ghost" href="#">📍 ${t('sc_track')}</a>
+    <a class="btn btn-primary" href="index.html#deals">${t('sc_more')} →</a>
+  </div>`;
+
+$('#copyRef').onclick = () => {
+  navigator.clipboard?.writeText('https://sharedealnow.com?ref=' + order.id);
+  toast(`<span class="tick">✓</span> ${t('copied')}`);
+};
+
+/* confetti burst */
+(function confetti() {
+  const colors = ['#4cbf42', '#ffb020', '#ff4d4f', '#2f6fed', '#9c27b0'];
+  for (let i = 0; i < 70; i++) {
+    const c = document.createElement('div');
+    c.className = 'confetti';
+    c.style.left = Math.random() * 100 + 'vw';
+    c.style.background = colors[i % colors.length];
+    c.style.animationDuration = (2.4 + Math.random() * 2.2) + 's';
+    c.style.animationDelay = Math.random() * .9 + 's';
+    c.style.transform = `rotate(${Math.random() * 360}deg)`;
+    if (i % 3 === 0) c.style.borderRadius = '50%';
+    document.body.appendChild(c);
+    setTimeout(() => c.remove(), 6000);
+  }
+})();
+</script>
+</body>
+</html>

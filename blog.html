@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal ব্লগ — টিপস ও গাইড</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="blog-head reveal in">
+    <h1 data-i18n="blog_title"></h1>
+    <p data-i18n="blog_sub"></p>
+  </div>
+  <div class="chips" id="bChips" style="justify-content:center;margin-top:16px"></div>
+  <div class="blog-grid" id="bGrid"></div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('blog');
+
+let bcat = 'all';
+const cats = [...new Set(BLOG.map(b => LANG === 'bn' ? b.cat : b.catEn))];
+
+function blogCardHTML(b, d) {
+  return `
+  <a class="bcard reveal" href="post.html?slug=${b.slug}" style="--d:${(d % 3) * .1}s">
+    <div class="bcover g${b.grad}"><span>${b.emoji}</span><span class="bcat">${LANG === 'bn' ? b.cat : b.catEn}</span></div>
+    <div class="bbody">
+      <h3>${LANG === 'bn' ? b.tbn : b.ten}</h3>
+      <p>${LANG === 'bn' ? b.ebn : b.een}</p>
+      <div class="bmeta"><span>📅 ${LANG === 'bn' ? b.date : b.dateEn}</span><span>⏱ ${b.mins} ${t('blog_min')}</span>
+      <span class="rd">${t('read_more')} <span>→</span></span></div>
+    </div>
+  </a>`;
+}
+
+function renderChips() {
+  $('#bChips').innerHTML =
+    `<button class="chip ${bcat === 'all' ? 'active' : ''}" data-c="all">✨ ${t('all')}</button>` +
+    cats.map(c => `<button class="chip ${bcat === c ? 'active' : ''}" data-c="${c}">${c}</button>`).join('');
+  $$('#bChips .chip').forEach(ch => ch.onclick = () => { bcat = ch.dataset.c; renderChips(); renderGrid(); });
+}
+function renderGrid() {
+  const list = bcat === 'all' ? BLOG : BLOG.filter(b => (LANG === 'bn' ? b.cat : b.catEn) === bcat);
+  $('#bGrid').innerHTML = list.map(blogCardHTML).join('');
+  $$('#bGrid .reveal').forEach(el => el.classList.add('in'));
+}
+renderChips(); renderGrid();
+initReveals();
+</script>
+</body>
+</html>

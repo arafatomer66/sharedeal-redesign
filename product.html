@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — পণ্য</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div class="crumbs" id="crumbs"></div>
+  <div class="pd" id="pd"></div>
+
+  <section class="section" style="padding-top:0" id="relatedSec">
+    <div class="section-head"><h2 data-i18n="related"></h2></div>
+    <div class="grid" id="relGrid"></div>
+  </section>
+</div>
+
+<div class="sticky-cta" id="stickyCta"></div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('shop');
+
+const pid = Number(new URLSearchParams(location.search).get('id')) || DEALS[0].productId;
+const P = prodById(pid) || PRODUCTS[0];
+const D = dealByPid(P.id);
+document.title = `${P.name} — ShareDeal`;
+
+let mode = D ? 'group' : 'solo';
+let qty = 1;
+
+const cat = CATEGORIES.find(c => c.key === P.cat);
+$('#crumbs').innerHTML = `<a href="index.html">${t('crumb_home')}</a> › <a href="index.html#shop">${cat ? (LANG === 'bn' ? cat.bn : cat.en) : ''}</a> › ${P.name}`;
+
+function price() { return mode === 'group' && D ? D.group : P.price; }
+function renderPD() {
+  const off = pctOff(P.mrp, P.price);
+  const goff = D ? pctOff(D.solo, D.group) : 0;
+  const left = D ? D.need - D.joined : 0;
+  const pct = D ? Math.round(D.joined / D.need * 100) : 0;
+  const avatars = D ? Array.from({ length: Math.min(5, D.joined) }, (_, i) =>
+    `<span style="background:${AV_COLORS[(P.id + i) % AV_COLORS.length]}">${AV_INITS[(P.id + i) % AV_INITS.length]}</span>`).join('') : '';
+
+  $('#pd').innerHTML = `
+  <div class="pd-gallery reveal in"><img src="${P.img}" alt="${P.name}"></div>
+  <div class="reveal in">
+    <div class="pd-meta">
+      <span class="tag g">⚡ ${t('next_day')}</span>
+      <span class="tag a">✅ ${t('t1')}</span>
+      <span class="rating">★ 4.8 <small>(126)</small></span>
+    </div>
+    <h1>${P.name}</h1>
+
+    ${D ? `
+    <div class="buy-modes">
+      <div class="mode ${mode === 'solo' ? 'sel' : ''}" id="mSolo">
+        <div class="m-label">🙋 ${t('buy_solo')}</div>
+        <div class="m-price">${tk(D.solo)}</div>
+        <div class="m-sub">${t('per_unit')}</div>
+        <span class="radio"></span>
+      </div>
+      <div class="mode grp ${mode === 'group' ? 'sel' : ''}" id="mGrp">
+        <span class="m-badge">-${goff}% · ${t('save_word')} ${tk(D.solo - D.group)}</span>
+        <div class="m-label">👥 ${t('buy_group')}</div>
+        <div class="m-price">${tk(D.group)}</div>
+        <div class="m-sub">${D.need} ${t('grp_note')}</div>
+        <span class="radio"></span>
+      </div>
+    </div>
+
+    <div class="pd-group-status">
+      <div class="gprog" style="margin:0">
+        <div class="gprog-top">
+          <span class="left" style="display:flex;align-items:center"><span class="avatars">${avatars}</span>&nbsp;${D.joined}/${D.need} ${t('joined')}</span>
+          <span class="right ${left <= 2 ? 'almost' : ''}">${left <= 2 ? '🔥 ' : ''}${t('almost')} ${left} ${t('need_more')} · <span data-ends="${D.endsAt}">⏱</span></span>
+        </div>
+        <div class="gbar"><i data-w="${pct}" style="width:${pct}%"></i></div>
+      </div>
+    </div>
+
+    <div class="share-nudge">
+      <span>🎯 ${t('share_nudge')} <b>${LANG === 'bn' ? 'দুজনেই জিতুন!' : 'you both win!'}</b></span>
+      <button id="shareBtn" style="margin-left:auto">🔗 ${t('share_btn')}</button>
+    </div>` : `
+    <div class="pprice" style="margin:14px 0 20px"><b style="font-size:1.9rem">${tk(P.price)}</b>${P.mrp > P.price ? `<s style="font-size:1.1rem">${tk(P.mrp)}</s><span class="tag" style="background:var(--red-050);color:var(--red)">-${off}%</span>` : ''}</div>`}
+
+    <div class="pd-cta">
+      <div class="qty-lg"><button id="qMinus">−</button><b id="qNum">1</b><button id="qPlus">+</button></div>
+      <button class="btn btn-ghost" id="addBtn">🛒 ${t('add_cart')}</button>
+      <button class="btn btn-primary" id="buyBtn">${t('buy_now')} · <span id="ctaPrice">${tk(price())}</span></button>
+    </div>
+
+    <div class="pd-trust">
+      <div><span class="i">✅</span>${t('t1')}</div>
+      <div><span class="i">💵</span>${t('t2')}</div>
+      <div><span class="i">↩️</span>${t('t3')}</div>
+    </div>
+
+    <div class="pd-desc">
+      <h3>${t('desc_title')}</h3>
+      <p>${P.name} — ${LANG === 'bn'
+        ? 'সরাসরি উৎস থেকে সংগ্রহ করা, ১০০% খাঁটি ও তাজা। ডেলিভারির সময় পণ্য যাচাই করে নিন — মান নিয়ে অসন্তুষ্ট হলে সাথে সাথে ফেরতযোগ্য।'
+        : 'Sourced directly from origin — 100% authentic and fresh. Check your items at delivery; instantly returnable if you\'re not happy with the quality.'}</p>
+      <ul>
+        <li>${LANG === 'bn' ? 'ঢাকার কভারেজ এলাকায় পরের দিন ডেলিভারি' : 'Next-day delivery in Dhaka coverage areas'}</li>
+        <li>${LANG === 'bn' ? '৳৫০০+ অর্ডারে ফ্রি ডেলিভারি' : 'Free delivery on ৳500+ orders'}</li>
+        ${D ? `<li>${LANG === 'bn' ? 'গ্রুপ পূরণ না হলে সম্পূর্ণ টাকা ফেরত' : 'Full refund if the group doesn\'t fill'}</li>` : ''}
+      </ul>
+    </div>
+  </div>`;
+
+  /* mode switch */
+  if (D) {
+    $('#mSolo').onclick = () => { mode = 'solo'; renderPD(); };
+    $('#mGrp').onclick = () => { mode = 'group'; renderPD(); };
+    $('#shareBtn').onclick = () => {
+      navigator.clipboard?.writeText(`https://sharedealnow.com/product/details/${P.id}?ref=group`);
+      toast(`<span class="tick">✓</span> ${t('copied')}`);
+    };
+  }
+  $('#qNum').textContent = qty;
+  $('#qPlus').onclick = () => { qty++; renderPD(); };
+  $('#qMinus').onclick = () => { if (qty > 1) qty--; renderPD(); };
+  $('#addBtn').onclick = e => addToCart(P.id, mode, qty, e.currentTarget);
+  $('#buyBtn').onclick = e => { addToCart(P.id, mode, qty, e.currentTarget); setTimeout(() => location.href = 'cart.html', 500); };
+
+  renderSticky();
+}
+
+/* sticky mobile CTA appears after scrolling past the fold */
+function renderSticky() {
+  $('#stickyCta').innerHTML = `
+    <div class="sp"><b>${tk(price() * qty)}</b>${D && mode === 'group' ? `<s>${tk(D.solo * qty)}</s>` : ''}</div>
+    <button class="btn btn-primary btn-sm" id="stickyBuy">${D && mode === 'group' ? '👥 ' + t('join_group') : t('buy_now')}</button>`;
+  $('#stickyBuy').onclick = e => { addToCart(P.id, mode, qty, e.currentTarget); setTimeout(() => location.href = 'cart.html', 500); };
+}
+addEventListener('scroll', () => {
+  $('#stickyCta').classList.toggle('show', scrollY > 380);
+}, { passive: true });
+
+/* related products from same category */
+const rel = PRODUCTS.filter(x => x.cat === P.cat && x.id !== P.id).slice(0, 6);
+$('#relGrid').innerHTML = rel.map(productCardHTML).join('');
+bindAddControls($('#relGrid'));
+
+renderPD();
+applyI18n();
+initReveals();
+initLazyImages();
+initCountdowns();
+</script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — একসাথে কিনুন, বেশি বাঁচান | Group Buying Grocery, Dhaka</title>
+<meta name="description" content="বাংলাদেশের প্রথম গ্রুপ বাইং গ্রোসারি প্ল্যাটফর্ম। প্রতিবেশীদের সাথে গ্রুপ করে পাইকারি দামে বাজার করুন — ফ্রি হোম ডেলিভারি।">
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body data-cartbar>
+
+<div id="site-header"></div>
+
+<!-- ========== HERO ========== -->
+<section class="hero">
+  <div class="wrap hero-in">
+    <div class="reveal in">
+      <h1><span data-i18n="hero_t1"></span><br><span class="accent"><span data-i18n="hero_t2"></span>
+        <svg viewBox="0 0 200 12" fill="none"><path d="M3 9 C60 2, 140 2, 197 7" stroke="#4cbf42" stroke-width="5" stroke-linecap="round" opacity=".45"/></svg>
+      </span></h1>
+      <p class="lead" data-i18n="hero_lead"></p>
+      <div class="hero-cta">
+        <a href="#deals" class="btn btn-primary btn-lg" data-i18n="hero_cta1"></a>
+        <a href="#how" class="btn btn-ghost btn-lg" data-i18n="hero_cta2"></a>
+      </div>
+      <div class="hero-stats">
+        <div class="stat"><b data-count="10000" data-suffix="+">0</b><span data-i18n="stat1"></span></div>
+        <div class="stat"><b data-count="241000" data-prefix="৳">0</b><span data-i18n="stat2"></span></div>
+        <div class="stat"><b data-count="47" data-suffix="%">0</b><span data-i18n="stat3"></span></div>
+      </div>
+    </div>
+
+    <div class="hero-visual">
+      <span class="float-pill p1"><span class="dot"></span> <span id="pill1"></span></span>
+      <div class="live-card" id="liveCard"></div>
+      <span class="float-pill p2">💰 <span id="pill2"></span></span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SOCIAL PROOF TICKER ========== -->
+<div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2 data-i18n="how_title"></h2><div class="sub" data-i18n="how_sub"></div>
+    </div></div>
+    <div class="steps">
+      <div class="step reveal" style="--d:0s"><span class="num">1</span><div class="ico">🛒</div><h3 data-i18n="how1t"></h3><p data-i18n="how1p"></p></div>
+      <div class="step reveal" style="--d:.12s"><span class="num">2</span><div class="ico">👥</div><h3 data-i18n="how2t"></h3><p data-i18n="how2p"></p></div>
+      <div class="step reveal" style="--d:.24s"><span class="num">3</span><div class="ico">🚚</div><h3 data-i18n="how3t"></h3><p data-i18n="how3p"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== GROUP DEALS ========== -->
+<section class="section" id="deals" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2>🔥 <span data-i18n="deals_title"></span></h2><div class="sub" data-i18n="deals_sub"></div>
+    </div><a class="see-all" href="#shop"><span data-i18n="see_all"></span> →</a></div>
+    <div class="deal-rail" id="dealRail"></div>
+  </div>
+</section>
+
+<!-- ========== BEST SELLERS + SHOP ========== -->
+<section class="section" id="shop" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2 data-i18n="shop_title"></h2><div class="sub" data-i18n="shop_sub"></div>
+    </div></div>
+    <div class="chips" id="catChips"></div>
+    <div class="grid" id="prodGrid" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<!-- ========== TRUST ========== -->
+<section class="section">
+  <div class="wrap">
+    <div class="trust reveal">
+      <h2 data-i18n="trust_title"></h2>
+      <div class="trust-grid">
+        <div class="trust-item"><div class="ico">✅</div><b data-i18n="trust1t"></b><p data-i18n="trust1p"></p></div>
+        <div class="trust-item"><div class="ico">🚚</div><b data-i18n="trust2t"></b><p data-i18n="trust2p"></p></div>
+        <div class="trust-item"><div class="ico">🏷️</div><b data-i18n="trust3t"></b><p data-i18n="trust3p"></p></div>
+        <div class="trust-item"><div class="ico">🛡️</div><b data-i18n="trust4t"></b><p data-i18n="trust4p"></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section class="section" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2 data-i18n="tstm_title"></h2><div class="sub" data-i18n="tstm_sub"></div>
+    </div></div>
+    <div class="tstm-grid" id="tstmGrid"></div>
+  </div>
+</section>
+
+<!-- ========== BLOG TEASER ========== -->
+<section class="section" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2>📖 <span data-i18n="home_blog_t"></span></h2><div class="sub" data-i18n="home_blog_s"></div>
+    </div><a class="see-all" href="blog.html"><span data-i18n="see_all"></span> →</a></div>
+    <div class="blog-grid" style="padding:0" id="homeBlog"></div>
+  </div>
+</section>
+
+<!-- ========== FAQ ========== -->
+<section class="section" id="faq" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal" style="justify-content:center;text-align:center"><div>
+      <h2 data-i18n="faq_title"></h2>
+    </div></div>
+    <div class="faq" id="faqList"></div>
+  </div>
+</section>
+
+<!-- ========== APP BAND ========== -->
+<section class="section" style="padding-top:8px">
+  <div class="wrap">
+    <div class="appband reveal">
+      <div>
+        <h2 data-i18n="app_title"></h2>
+        <p data-i18n="app_sub"></p>
+        <a class="btn btn-dark" href="https://play.google.com/store/apps/details?id=com.selefe.selefe" target="_blank" rel="noopener">▶ <span data-i18n="app_cta"></span></a>
+      </div>
+      <div style="font-size:5rem;text-align:center">📱</div>
+    </div>
+  </div>
+</section>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('deals');
+
+/* hero live card = hottest deal (fewest spots left) */
+(function () {
+  const d = [...DEALS].sort((a, b) => (a.need - a.joined) - (b.need - b.joined))[0];
+  const p = prodById(d.productId);
+  const left = d.need - d.joined;
+  const pct = Math.round(d.joined / d.need * 100);
+  $('#liveCard').innerHTML = `
+    <div class="lc-head"><span class="live-dot"></span><b>${t('live_now')}</b>
+      <span class="deal-timer" style="position:static;margin-left:auto" data-ends="${d.endsAt}">⏱</span></div>
+    <div class="lc-row">
+      <img src="${p.img}" alt="${p.name}">
+      <div style="flex:1">
+        <b style="font-size:.92rem;line-height:1.3">${p.name}</b>
+        <div class="lc-prices"><span class="price-now">${tk(d.group)}</span><span class="price-was">${tk(d.solo)}</span></div>
+      </div>
+    </div>
+    <div class="gprog" style="margin-top:10px">
+      <div class="gprog-top"><span class="left">${d.joined}/${d.need} ${t('joined')}</span>
+      <span class="right almost">🔥 ${t('almost')} ${left} ${t('need_more')}</span></div>
+      <div class="gbar"><i data-w="${pct}"></i></div>
+    </div>
+    <button class="btn btn-primary join-btn" data-id="${p.id}" style="width:100%;margin-top:8px">👥 ${t('join_group')} · ${tk(d.group)}</button>`;
+  $('#pill1').textContent = LANG === 'bn' ? 'গ্রুপ পূরণ হচ্ছে…' : 'Group filling up…';
+  $('#pill2').textContent = LANG === 'bn' ? 'এই সপ্তাহে ৳৪২০ সাশ্রয়' : 'Saved ৳420 this week';
+})();
+
+/* ticker */
+(function () {
+  const items = TICKER.map(x => `<span class="ticker-item"><span class="dot"></span>${LANG === 'bn' ? x.bn : x.en}</span>`).join('');
+  $('#tickerTrack').innerHTML = items + items; /* duplicate for seamless loop */
+})();
+
+/* deals rail */
+$('#dealRail').innerHTML = DEALS.map(dealCardHTML).join('');
+initAutoRail('#dealRail');
+
+/* category chips + product grid */
+let activeCat = 'all';
+function renderChips() {
+  $('#catChips').innerHTML =
+    `<button class="chip ${activeCat === 'all' ? 'active' : ''}" data-cat="all">✨ ${t('all')}</button>` +
+    CATEGORIES.map(c => `<button class="chip ${activeCat === c.key ? 'active' : ''}" data-cat="${c.key}">${c.icon} ${LANG === 'bn' ? c.bn : c.en}</button>`).join('');
+  $$('#catChips .chip').forEach(ch => ch.onclick = () => { activeCat = ch.dataset.cat; renderChips(); renderGrid(); });
+}
+function renderGrid(query = '') {
+  let list = activeCat === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === activeCat);
+  if (query) list = list.filter(p => p.name.toLowerCase().includes(query.toLowerCase()));
+  if (activeCat === 'all' && !query) list = list.slice(0, 18);
+  $('#prodGrid').innerHTML = list.length
+    ? list.map(productCardHTML).join('')
+    : `<p style="grid-column:1/-1;color:var(--ink-3);padding:30px 0">😕 ${LANG === 'bn' ? 'কোনো পণ্য পাওয়া যায়নি' : 'No products found'}</p>`;
+  bindAddControls($('#prodGrid'));
+  initLazyImages($('#prodGrid'));
+  $$('#prodGrid .reveal').forEach(el => el.classList.add('in'));
+}
+renderChips(); renderGrid();
+
+/* live search filters the grid */
+document.addEventListener('input', e => {
+  if (e.target.id === 'searchInput') {
+    activeCat = 'all'; renderChips(); renderGrid(e.target.value.trim());
+    if (e.target.value.trim()) $('#shop').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+});
+
+/* testimonials */
+$('#tstmGrid').innerHTML = TESTIMONIALS.map((x, i) => `
+  <div class="tstm reveal" style="--d:${i * .12}s">
+    <div class="stars">★★★★★</div>
+    <p>“${LANG === 'bn' ? x.bn : x.en}”</p>
+    <div class="tstm-foot">
+      <span class="av" style="background:${AV_COLORS[i % AV_COLORS.length]}">${x.name[0]}</span>
+      <span><b>${x.name}</b><span>📍 ${x.area}</span></span>
+      <span class="tstm-save">${t('saved')} ${tk(x.saved)}</span>
+    </div>
+  </div>`).join('');
+
+/* blog teaser: latest 3 posts */
+$('#homeBlog').innerHTML = BLOG.slice(0, 3).map((b, i) => `
+  <a class="bcard reveal" href="post.html?slug=${b.slug}" style="--d:${i * .1}s">
+    <div class="bcover g${b.grad}"><span>${b.emoji}</span><span class="bcat">${LANG === 'bn' ? b.cat : b.catEn}</span></div>
+    <div class="bbody"><h3>${LANG === 'bn' ? b.tbn : b.ten}</h3>
+    <p>${LANG === 'bn' ? b.ebn : b.een}</p>
+    <div class="bmeta"><span>⏱ ${b.mins} ${t('blog_min')}</span><span class="rd">${t('read_more')} →</span></div></div>
+  </a>`).join('');
+
+/* FAQ accordion */
+$('#faqList').innerHTML = FAQS.map((f, i) => `
+  <div class="faq-item reveal" style="--d:${i * .07}s">
+    <button class="faq-q">${LANG === 'bn' ? f.qbn : f.qen}<span class="car">+</span></button>
+    <div class="faq-a"><p>${LANG === 'bn' ? f.abn : f.aen}</p></div>
+  </div>`).join('');
+$$('.faq-item').forEach(item => $('.faq-q', item).onclick = () => {
+  const a = $('.faq-a', item), open = item.classList.toggle('open');
+  a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
+});
+
+/* animated hero stats */
+$$('[data-count]').forEach(el => {
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    countUp(el, Number(el.dataset.count), el.dataset.prefix || '', el.dataset.suffix || '');
+    io.disconnect();
+  }));
+  io.observe(el);
+});
+
+initReveals();
+initLazyImages();
+initCountdowns();
+bindAddControls(document.body);
+</script>
+</body>
+</html>

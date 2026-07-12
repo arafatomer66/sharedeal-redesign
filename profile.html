@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ShareDeal — আমার অ্যাকাউন্ট</title>
+<link rel="icon" href="https://sharedealnow.com/favicon.ico">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/main.css">
+</head>
+<body>
+
+<div id="site-header"></div>
+
+<div class="wrap">
+  <div id="pfRoot"></div>
+</div>
+
+<div id="site-footer"></div>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+bootCommon('');
+
+const PF_I18N = {
+  bn: {
+    pf_title: 'আমার অ্যাকাউন্ট', pf_sub: 'প্রোফাইল, অর্ডার ও গ্রুপ — সব এক জায়গায়',
+    pf_member: 'সক্রিয় সদস্য', pf_saved: 'মোট সাশ্রয়',
+    nav_info: 'প্রোফাইল তথ্য', nav_orders: 'আমার অর্ডার', nav_groups: 'আমার গ্রুপ', nav_notif: 'নোটিফিকেশন', nav_logout: 'লগআউট',
+    info_t: 'প্রোফাইল তথ্য', info_s: 'আপনার ব্যক্তিগত তথ্য আপডেট করুন',
+    f_email: 'ইমেইল ঠিকানা (ঐচ্ছিক)', lock_note: '🔒 মোবাইল নম্বর পরিবর্তন করা সম্ভব নয়',
+    save_btn: 'প্রোফাইল আপডেট করুন', saved_toast: 'প্রোফাইল আপডেট হয়েছে',
+    orders_t: 'আমার অর্ডার', orders_s: 'আপনার সাম্প্রতিক অর্ডারগুলো',
+    o_empty: 'এখনো কোনো অর্ডার নেই', o_empty_s: 'গ্রুপ ডিল থেকে শুরু করুন — সবচেয়ে বেশি সাশ্রয় ওখানেই!',
+    o_items: 'টি পণ্য', o_status_packing: 'প্যাকিং হচ্ছে', o_status_done: 'ডেলিভারড',
+    groups_t: 'আমার গ্রুপ', groups_s: 'যে গ্রুপগুলোতে আপনি আছেন',
+    g_empty: 'আপনি এখনো কোনো গ্রুপে নেই', g_share: 'শেয়ার',
+    g_full: 'গ্রুপ সম্পূর্ণ — ডেলিভারির অপেক্ষায়', browse_deals: '🔥 গ্রুপ ডিল দেখুন',
+    n_t: 'নোটিফিকেশন', n_s: 'কোন আপডেটগুলো পেতে চান?',
+    n1: 'অর্ডার আপডেট', n1s: 'কনফার্মেশন, প্যাকিং ও ডেলিভারি স্ট্যাটাস',
+    n2: 'গ্রুপ আপডেট', n2s: 'কেউ যোগ দিলে বা গ্রুপ পূরণ হলে জানুন',
+    n3: 'অফার ও ডিল', n3s: 'নতুন গ্রুপ ডিল আর এক্সক্লুসিভ অফার',
+    login_t: 'লগইন করুন', login_s: 'মোবাইল নম্বর দিয়ে ৩০ সেকেন্ডেই — কোনো পাসওয়ার্ড লাগবে না',
+    logout_toast: 'লগআউট হয়েছে',
+  },
+  en: {
+    pf_title: 'My Account', pf_sub: 'Profile, orders & groups — all in one place',
+    pf_member: 'Active member', pf_saved: 'Total saved',
+    nav_info: 'Profile info', nav_orders: 'My orders', nav_groups: 'My groups', nav_notif: 'Notifications', nav_logout: 'Log out',
+    info_t: 'Profile info', info_s: 'Update your personal details',
+    f_email: 'Email address (optional)', lock_note: '🔒 Mobile number cannot be changed',
+    save_btn: 'Update profile', saved_toast: 'Profile updated',
+    orders_t: 'My orders', orders_s: 'Your recent orders',
+    o_empty: 'No orders yet', o_empty_s: 'Start with a group deal — that\'s where the biggest savings are!',
+    o_items: 'items', o_status_packing: 'Being packed', o_status_done: 'Delivered',
+    groups_t: 'My groups', groups_s: 'Groups you\'re part of',
+    g_empty: 'You\'re not in any group yet', g_share: 'Share',
+    g_full: 'Group complete — awaiting delivery', browse_deals: '🔥 Browse group deals',
+    n_t: 'Notifications', n_s: 'Which updates do you want?',
+    n1: 'Order updates', n1s: 'Confirmation, packing & delivery status',
+    n2: 'Group updates', n2s: 'Know when someone joins or your group fills',
+    n3: 'Offers & deals', n3s: 'New group deals and exclusive offers',
+    login_t: 'Log in', login_s: 'With your mobile number in 30 seconds — no password needed',
+    logout_toast: 'Logged out',
+  }
+};
+const pt = k => (PF_I18N[LANG] && PF_I18N[LANG][k]) || PF_I18N.bn[k] || k;
+
+let tab = new URLSearchParams(location.search).get('tab') || 'info';
+
+function getOrders() { try { return JSON.parse(localStorage.getItem('sd_orders')) || []; } catch { return []; } }
+function getPrefs() { try { return JSON.parse(localStorage.getItem('sd_notif')) || { n1: true, n2: true, n3: true }; } catch { return { n1: true, n2: true, n3: true }; } }
+
+function render() {
+  const user = getUser();
+  const root = $('#pfRoot');
+
+  /* logged out → compact phone login (same phone-first pattern as the wizard) */
+  if (!user) {
+    root.innerHTML = `
+      <div class="pf-panel reveal in" style="max-width:440px;margin:50px auto;text-align:center">
+        <div class="pf-av" style="margin-bottom:14px">👤</div>
+        <h3>${pt('login_t')}</h3>
+        <p class="psub">${pt('login_s')}</p>
+        <div class="field" id="lgField" style="text-align:left">
+          <div class="gm-phone"><span class="pfx">🇧🇩 +88</span><input id="lgPhone" inputmode="numeric" maxlength="11" placeholder="01XXXXXXXXX"></div>
+          <span class="err">${t('err_phone')}</span>
+        </div>
+        <button class="btn btn-primary btn-lg" style="width:100%;margin-top:6px" id="lgBtn">${t('gm_send_otp')} →</button>
+      </div>`;
+    $('#lgBtn').onclick = () => {
+      const v = $('#lgPhone').value.trim();
+      if (!/^01\d{9}$/.test(v)) { $('#lgField').classList.add('bad'); return; }
+      localStorage.setItem('sd_user', JSON.stringify({ phone: v, at: Date.now() }));
+      toast(`<span class="tick">✓</span> ${t('gm_welcome')} ${v}`);
+      location.reload();
+    };
+    return;
+  }
+
+  const cust = JSON.parse(localStorage.getItem('sd_customer') || '{}');
+  const orders = getOrders();
+  const totalSaved = orders.reduce((s, o) => s + (o.save || 0), 0);
+  const name = cust.name || '';
+  const initials = name ? name.trim().split(/\s+/).map(w => w[0]).slice(0, 2).join('').toUpperCase() : '👤';
+
+  root.innerHTML = `
+  <h1 style="font-size:1.55rem;font-weight:900;padding-top:26px">${pt('pf_title')}</h1>
+  <p style="color:var(--ink-2);font-size:.9rem">${pt('pf_sub')}</p>
+  <div class="pf-layout">
+    <aside class="pf-side reveal in">
+      <div class="pf-card">
+        <div class="pf-av">${initials}</div>
+        <b>${name || user.phone}</b>
+        <span class="ph">${user.phone}</span><br>
+        <span class="pf-badge">✅ ${pt('pf_member')}</span>
+        <div class="pf-save">💰 ${pt('pf_saved')}: <b>${tk(totalSaved)}</b></div>
+      </div>
+      <nav class="pf-nav">
+        <button data-tab="info" class="${tab === 'info' ? 'active' : ''}">👤 ${pt('nav_info')}</button>
+        <button data-tab="orders" class="${tab === 'orders' ? 'active' : ''}">🛒 ${pt('nav_orders')}</button>
+        <button data-tab="groups" class="${tab === 'groups' ? 'active' : ''}">👥 ${pt('nav_groups')}</button>
+        <button data-tab="notif" class="${tab === 'notif' ? 'active' : ''}">🔔 ${pt('nav_notif')}</button>
+        <button id="pfLogout" class="danger">↪ ${pt('nav_logout')}</button>
+      </nav>
+    </aside>
+    <div class="pf-main reveal in" id="pfPanel"></div>
+  </div>`;
+
+  $$('.pf-nav [data-tab]').forEach(b => b.onclick = () => { tab = b.dataset.tab; render(); });
+  $('#pfLogout').onclick = () => {
+    localStorage.removeItem('sd_user');
+    toast(pt('logout_toast'));
+    setTimeout(() => location.href = 'index.html', 500);
+  };
+  renderPanel();
+}
+
+function renderPanel() {
+  const user = getUser();
+  const cust = JSON.parse(localStorage.getItem('sd_customer') || '{}');
+  const panel = $('#pfPanel');
+
+  if (tab === 'info') {
+    panel.innerHTML = `
+    <div class="pf-panel">
+      <h3>${pt('info_t')}</h3><p class="psub">${pt('info_s')}</p>
+      <div class="frow">
+        <div class="field"><label>${t('f_name')}</label><input id="pfName" value="${cust.name || ''}"></div>
+        <div class="field"><label>${pt('f_email')}</label><input id="pfEmail" type="email" value="${cust.email || ''}"></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>${t('f_phone')}</label><input value="${user.phone}" disabled style="background:var(--bg);color:var(--ink-3)"></div>
+        <div class="field"><label>${t('f_area')}</label>
+          <select id="pfArea"><option value="">—</option>${AREAS.map(a => `<option ${cust.area === a ? 'selected' : ''}>${a}</option>`).join('')}</select></div>
+      </div>
+      <p class="pf-locknote">${pt('lock_note')}</p>
+      <button class="btn btn-primary" id="pfSave">💾 ${pt('save_btn')}</button>
+    </div>`;
+    $('#pfSave').onclick = () => {
+      const c = { ...cust, name: $('#pfName').value.trim(), email: $('#pfEmail').value.trim(), area: $('#pfArea').value, phone: user.phone };
+      localStorage.setItem('sd_customer', JSON.stringify(c));
+      toast(`<span class="tick">✓</span> ${pt('saved_toast')}`);
+      render();
+    };
+
+  } else if (tab === 'orders') {
+    const orders = getOrders();
+    panel.innerHTML = `
+    <div class="pf-panel">
+      <h3>${pt('orders_t')}</h3><p class="psub">${pt('orders_s')}</p>
+      ${orders.length ? orders.slice().reverse().map(o => {
+        const n = (o.items || []).reduce((s, i) => s + i.qty, 0);
+        const done = Date.now() - o.at > 36e5; /* demo: older than an hour = delivered */
+        return `<div class="order-row">
+          <div><div class="oid">#${o.id}</div>
+          <div class="ometa">${new Date(o.at).toLocaleDateString('en-GB')} · ${n} ${pt('o_items')} · ${o.pay.toUpperCase()}</div></div>
+          <span class="ostatus ${done ? 'done' : ''}">${done ? '✅ ' + pt('o_status_done') : '📦 ' + pt('o_status_packing')}</span>
+          <span class="ototal">${tk(o.total)}</span>
+        </div>`;
+      }).join('') : `
+      <div style="text-align:center;padding:30px 0">
+        <div style="font-size:2.6rem;margin-bottom:8px">🛒</div>
+        <b>${pt('o_empty')}</b>
+        <p style="color:var(--ink-2);font-size:.86rem;margin:6px 0 18px">${pt('o_empty_s')}</p>
+        <a class="btn btn-primary btn-sm" href="index.html#deals">${pt('browse_deals')}</a>
+      </div>`}
+    </div>`;
+
+  } else if (tab === 'groups') {
+    const orders = getOrders();
+    const groupLines = [];
+    const seen = new Set();
+    orders.forEach(o => (o.items || []).forEach(i => {
+      if (i.mode === 'group' && !seen.has(i.id)) { seen.add(i.id); groupLines.push(i); }
+    }));
+    panel.innerHTML = `
+    <div class="pf-panel">
+      <h3>${pt('groups_t')}</h3><p class="psub">${pt('groups_s')}</p>
+      ${groupLines.length ? groupLines.map(i => {
+        const p = prodById(i.id); const d = dealByPid(i.id);
+        if (!p) return '';
+        const full = d ? d.joined >= d.need : true;
+        const pct = d ? Math.min(100, Math.round(d.joined / d.need * 100)) : 100;
+        const left = d ? d.need - d.joined : 0;
+        return `<div class="grp-row">
+          <div class="g-head">
+            <img src="${p.img}" alt="">
+            <span class="g-name">${p.name}</span>
+            <button class="btn btn-ghost btn-sm g-share" data-id="${p.id}">🔗 ${pt('g_share')}</button>
+          </div>
+          <div class="gprog" style="margin:0">
+            <div class="gprog-top">
+              <span class="left">${d ? `${d.joined}/${d.need} ${t('joined')}` : ''}</span>
+              <span class="right" style="${full ? 'color:#a06a00' : ''}">${full ? '✨ ' + pt('g_full') : `${left} ${t('need_more')}`}</span>
+            </div>
+            <div class="gbar ${full ? 'full' : ''}"><i style="width:${pct}%"></i></div>
+          </div>
+        </div>`;
+      }).join('') : `
+      <div style="text-align:center;padding:30px 0">
+        <div style="font-size:2.6rem;margin-bottom:8px">👥</div>
+        <b>${pt('g_empty')}</b><br><br>
+        <a class="btn btn-primary btn-sm" href="index.html#deals">${pt('browse_deals')}</a>
+      </div>`}
+    </div>`;
+    $$('.g-share', panel).forEach(b => b.onclick = () => {
+      navigator.clipboard?.writeText(`https://sharedealnow.com/product/details/${b.dataset.id}?ref=group`);
+      toast(`<span class="tick">✓</span> ${t('copied')}`);
+    });
+
+  } else if (tab === 'notif') {
+    const prefs = getPrefs();
+    panel.innerHTML = `
+    <div class="pf-panel">
+      <h3>${pt('n_t')}</h3><p class="psub">${pt('n_s')}</p>
+      ${['n1', 'n2', 'n3'].map(k => `
+        <div class="switch-row">
+          <span><b>${pt(k)}</b><small>${pt(k + 's')}</small></span>
+          <span class="switch ${prefs[k] ? 'on' : ''}" data-k="${k}"></span>
+        </div>`).join('')}
+    </div>`;
+    $$('.switch', panel).forEach(sw => sw.onclick = () => {
+      const p = getPrefs();
+      p[sw.dataset.k] = !p[sw.dataset.k];
+      localStorage.setItem('sd_notif', JSON.stringify(p));
+      sw.classList.toggle('on');
+    });
+  }
+}
+
+render();
+</script>
+</body>
+</html>

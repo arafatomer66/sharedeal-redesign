@@ -115,6 +115,45 @@ const I18N = {
     pt_addr: 'ঠিকানা', pt_addr_ph: 'জেলা ও পোস্টাল কোডসহ সম্পূর্ণ ঠিকানা', pt_off_live: 'ছাড়',
     pt_submit: 'পণ্য অফার জমা দিন', pt_note: 'আমাদের টিম ২৪ ঘণ্টার মধ্যে যোগাযোগ করবে',
     pt_done_t: '✅ অফার জমা হয়েছে!', pt_done_p: 'ধন্যবাদ! আমাদের সোর্সিং টিম আপনার পণ্যটি যাচাই করে ২৪ ঘণ্টার মধ্যে ফোন করবে।',
+    /* --- positioning + momentum (above the fold) --- */
+    hero_eyebrow: 'বাংলাদেশের ফার্ম-টু-কনজিউমার গ্রুপ বাইং গ্রোসারি প্ল্যাটফর্ম',
+    hero_momentum: '৮ মাসে ইউজার গ্রোথ',
+    /* --- traction --- */
+    trc_eyebrow: 'ট্র্যাকশন', trc_title: 'প্রতিশ্রুতি নয়, প্রমাণ।',
+    trc_sub: 'বাস্তব সংখ্যা, বাস্তব প্রবৃদ্ধি — ঢাকাজুড়ে।',
+    trc_users: 'রেজিস্টার্ড ইউজার', trc_farmers: 'কৃষক পার্টনার',
+    trc_ret: 'ইউজার রিটেনশন', trc_orders: 'মোট অর্ডার',
+    trc_zones_v: 'সক্রিয় জোন', trc_zones_s: 'বনশ্রী · রামপুরা · আফতাবনগর · মিরপুর',
+    trc_growth_l: 'ইউজার গ্রোথ', trc_growth_note: '৫,০০০ → ৭৫,০০০ ইউজার · ২০২৪–২০২৫',
+    /* --- partners --- */
+    prt_eyebrow: 'পার্টনারশিপ', prt_title: 'আমাদের B2B পার্টনার নেটওয়ার্ক',
+    prt_sub: 'বাংলাদেশের বিশ্বস্ত প্রতিষ্ঠানের সাথে গড়ে তুলছি ফার্ম-টু-হোম নেটওয়ার্ক',
+    /* --- scale / map --- */
+    map_eyebrow: 'স্কেল', map_title: 'ঢাকাজুড়ে লাইভ',
+    map_sub: 'বর্তমানে ৪টি জোনে ডেলিভারি করছি — আরও আসছে',
+    map_live: 'লাইভ', map_soon: 'শীঘ্রই',
+    map_zones_h: 'সক্রিয় ডেলিভারি জোন', map_next_h: 'পরবর্তী সম্প্রসারণ',
+    /* --- farmer story --- */
+    frm_eyebrow: 'কৃষকের গল্প', frm_title: 'তাদের খেত থেকে, আপনার ঘরে।',
+    frm_quote: 'আগে ফড়িয়ারা দাম ঠিক করত। এখন ShareDeal-এ সরাসরি বিক্রি করি — ন্যায্য দাম পাই, আর অর্ডার আগেই জানি।',
+    frm_name: 'তোতা মিয়া', frm_role: 'ক্ষুদ্র কৃষক · বগুড়া',
+    frm_p1t: '৭০%', frm_p1s: 'কৃষক আগে ফড়িয়ার উপর নির্ভরশীল ছিল',
+    frm_p2t: 'ন্যায্য দাম', frm_p2s: 'সরাসরি খেত থেকে, মাঝে কেউ নেই',
+    frm_p3t: 'আগাম চাহিদা', frm_p3s: 'গ্রুপ অর্ডার আগেই জানা যায়',
+    /* --- founders / our story --- */
+    team_eyebrow: 'আমাদের গল্প', team_title: 'ShareDeal যারা গড়ছেন',
+    team_sub: 'একটি ভাঙা বাজার ঠিক করার মিশনে — কৃষক পান ন্যায্য দাম, পরিবার পায় সাশ্রয়।',
+    team_foysal_role: 'সিইও ও ফাউন্ডার',
+    team_foysal_bio: '৮ মাসে ০ থেকে ৭৫,০০০ ইউজার। প্রাক্তন ফাউন্ডার — Yienia.com; ই-কমার্স, গ্রোথ ও ডিজিটাল মার্কেটিংয়ে ৫+ বছর।',
+    team_omer_role: 'সিটিও ও কো-ফাউন্ডার',
+    team_omer_bio: 'প্রাক্তন সফটওয়্যার ইঞ্জিনিয়ার — Allianz Australia; পূর্বে bdstall.com, SCT ও Retail Tech। সফটওয়্যার ইঞ্জিনিয়ারিং ও প্রোডাক্টে ৫+ বছর।',
+    team_linkedin: 'LinkedIn',
+    /* --- investors --- */
+    inv_link: 'ইনভেস্টর', inv_eyebrow: 'ইনভেস্টর',
+    inv_title: 'ফার্ম-টু-হোম কমার্সের ভবিষ্যৎ গড়ছি।',
+    inv_p: '$৮.৫B গ্রোসারি মার্কেট, বছরে ১১% বৃদ্ধি। ১৪× গ্রোথ আর প্রমাণিত রেভিনিউ নিয়ে আমরা দ্রুত স্কেল করছি। পিচ ডেক ডাউনলোড করুন অথবা যোগাযোগ করুন।',
+    inv_s1: 'টোটাল মার্কেট (TAM)', inv_s2: 'ইউজার গ্রোথ', inv_s3: 'রেভিনিউ জেনারেটেড',
+    inv_cta_deck: 'পিচ ডেক ডাউনলোড করুন', inv_cta_call: 'কল বুক করুন',
   },
   en: {
     topbar_pre: 'Order within', topbar_post: 'for same-day delivery in Dhaka',
@@ -228,6 +267,45 @@ const I18N = {
     pt_addr: 'Address', pt_addr_ph: 'Full address incl. district & postal code', pt_off_live: 'OFF',
     pt_submit: 'Submit product offer', pt_note: 'Our team will contact you within 24 hours',
     pt_done_t: '✅ Offer submitted!', pt_done_p: 'Thank you! Our sourcing team will verify your product and call you within 24 hours.',
+    /* --- positioning + momentum (above the fold) --- */
+    hero_eyebrow: "Bangladesh's farm-to-consumer group-buying grocery platform",
+    hero_momentum: 'user growth in 8 months',
+    /* --- traction --- */
+    trc_eyebrow: 'TRACTION', trc_title: 'Proof, not promises.',
+    trc_sub: 'Real numbers, real growth — across Dhaka.',
+    trc_users: 'Registered users', trc_farmers: 'Farmer partners',
+    trc_ret: 'User retention', trc_orders: 'Total orders',
+    trc_zones_v: 'Active zones', trc_zones_s: 'Banasree · Rampura · Aftabnagar · Mirpur',
+    trc_growth_l: 'User growth', trc_growth_note: '5,000 → 75,000 users · 2024–2025',
+    /* --- partners --- */
+    prt_eyebrow: 'PARTNERSHIPS', prt_title: 'Our B2B partner network',
+    prt_sub: 'Building the farm-to-home network with trusted Bangladeshi companies',
+    /* --- scale / map --- */
+    map_eyebrow: 'SCALE', map_title: 'Live across Dhaka',
+    map_sub: 'Delivering in 4 zones today — more on the way',
+    map_live: 'Live', map_soon: 'Soon',
+    map_zones_h: 'Active delivery zones', map_next_h: 'Next expansion',
+    /* --- farmer story --- */
+    frm_eyebrow: 'FARMER STORY', frm_title: 'From their field, to your home.',
+    frm_quote: 'Middlemen used to set my price. Now I sell direct through ShareDeal — a fair price, and I know the orders in advance.',
+    frm_name: 'Tota Mia', frm_role: 'Smallholder farmer · Bogura',
+    frm_p1t: '70%', frm_p1s: 'of smallholder farmers relied on middlemen',
+    frm_p2t: 'Fair price', frm_p2s: 'straight from the field, no one in between',
+    frm_p3t: 'Demand upfront', frm_p3s: 'group orders known in advance',
+    /* --- founders / our story --- */
+    team_eyebrow: 'OUR STORY', team_title: 'The people building ShareDeal',
+    team_sub: 'On a mission to fix a broken market — fair prices for farmers, real savings for families.',
+    team_foysal_role: 'CEO & Founder',
+    team_foysal_bio: '0 → 75,000 users in 8 months. Ex-founder of Yienia.com; 5+ years in e-commerce, growth & digital marketing.',
+    team_omer_role: 'CTO & Co-Founder',
+    team_omer_bio: 'Former Software Engineer at Allianz Australia; earlier at bdstall.com, SCT & Retail Tech. 5+ years in software engineering & product.',
+    team_linkedin: 'LinkedIn',
+    /* --- investors --- */
+    inv_link: 'Investors', inv_eyebrow: 'INVESTORS',
+    inv_title: 'Building the future of farm-to-home commerce.',
+    inv_p: 'An $8.5B grocery market growing 11% a year. With 14× growth and proven revenue, we\'re scaling fast. Download our pitch deck or reach out.',
+    inv_s1: 'Total market (TAM)', inv_s2: 'User growth', inv_s3: 'Revenue generated',
+    inv_cta_deck: 'Download the pitch deck', inv_cta_call: 'Book a call',
   }
 };
 
@@ -416,7 +494,7 @@ function renderFooter() {
         <div class="pay-badges"><span>bKash</span><span>Nagad</span><span>VISA</span><span>COD</span></div>
       </div>
       <div><h4 data-i18n="f_company"></h4>
-        <a href="#" data-i18n="f_about_l"></a><a href="#" data-i18n="f_career"></a><a href="blog.html" data-i18n="f_blog"></a><a href="partner.html" data-i18n="f_partner"></a></div>
+        <a href="index.html#our-story" data-i18n="f_about_l"></a><a href="index.html#investors" data-i18n="inv_link"></a><a href="blog.html" data-i18n="f_blog"></a><a href="partner.html" data-i18n="f_partner"></a></div>
       <div><h4 data-i18n="f_help"></h4>
         <a href="#" data-i18n="f_contact"></a><a href="index.html#faq" data-i18n="f_faq"></a><a href="#" data-i18n="f_return"></a><a href="#" data-i18n="f_privacy"></a><a href="#" data-i18n="f_terms"></a></div>
       <div><h4 data-i18n="f_coverage"></h4>${AREAS.map(a => `<a href="#">📍 ${a}</a>`).join('')}</div>
@@ -847,16 +925,43 @@ function initAutoRail(sel, ms) {
   }
 }
 
-/* animated number count-up */
-function countUp(el, target, prefix = '', suffix = '', dur = 1400) {
+/* animated number count-up — animates from `from`×target (0..1) up to target.
+   Callers pass from>0 so the odometer never shows a zero/blank moment. */
+function countUp(el, target, prefix = '', suffix = '', dur = 1400, from = 0) {
+  const base = target * Math.max(0, Math.min(1, from));
   const start = performance.now();
   const step = now => {
     const k = Math.min(1, (now - start) / dur);
     const eased = 1 - Math.pow(1 - k, 3);
-    el.textContent = prefix + Math.round(target * eased).toLocaleString('en-IN') + suffix;
+    el.textContent = prefix + Math.round(base + (target - base) * eased).toLocaleString('en-IN') + suffix;
     if (k < 1) requestAnimationFrame(step);
   };
   requestAnimationFrame(step);
+}
+
+/* Wire every [data-count]: show the REAL number immediately (never 0/blank).
+   Above-the-fold counters render final at once; below-the-fold ones odometer
+   up from 60% as they scroll into view — so a zero is never seen anywhere. */
+function initCounters(scope = document) {
+  $$('[data-count]', scope).forEach(el => {
+    if (el.dataset.counted) return;
+    el.dataset.counted = '1';
+    const target = Number(el.dataset.count);
+    const pfx = el.dataset.prefix || '', sfx = el.dataset.suffix || '';
+    const fmt = v => pfx + Math.round(v).toLocaleString('en-IN') + sfx;
+    const visible = el.getBoundingClientRect().top < innerHeight;
+    if (visible || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      el.textContent = fmt(target);          // real number, immediately
+    } else {
+      el.textContent = fmt(target * 0.6);     // pre-paint a real (non-zero) value
+      const io = new IntersectionObserver(es => es.forEach(e => {
+        if (!e.isIntersecting) return;
+        countUp(el, target, pfx, sfx, 1100, 0.6);
+        io.disconnect();
+      }), { threshold: .35 });
+      io.observe(el);
+    }
+  });
 }
 
 /* ============ boot ============ */

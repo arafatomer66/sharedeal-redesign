@@ -19,6 +19,7 @@
 <section class="hero">
   <div class="wrap hero-in">
     <div class="reveal in">
+      <div class="hero-eyebrow"><span class="he-leaf">🌱</span> <span data-i18n="hero_eyebrow"></span></div>
       <h1><span data-i18n="hero_t1"></span><br><span class="accent"><span data-i18n="hero_t2"></span>
         <svg viewBox="0 0 200 12" fill="none"><path d="M3 9 C60 2, 140 2, 197 7" stroke="#4cbf42" stroke-width="5" stroke-linecap="round" opacity=".45"/></svg>
       </span></h1>
@@ -26,11 +27,12 @@
       <div class="hero-cta">
         <a href="#deals" class="btn btn-primary btn-lg" data-i18n="hero_cta1"></a>
         <a href="#how" class="btn btn-ghost btn-lg" data-i18n="hero_cta2"></a>
+        <span class="momentum-pill">📈 <b>14×</b> <span data-i18n="hero_momentum"></span></span>
       </div>
       <div class="hero-stats">
-        <div class="stat"><b data-count="10000" data-suffix="+">0</b><span data-i18n="stat1"></span></div>
-        <div class="stat"><b data-count="241000" data-prefix="৳">0</b><span data-i18n="stat2"></span></div>
-        <div class="stat"><b data-count="47" data-suffix="%">0</b><span data-i18n="stat3"></span></div>
+        <div class="stat"><b data-count="75000" data-suffix="+">75,000+</b><span data-i18n="stat1"></span></div>
+        <div class="stat"><b data-count="241000" data-prefix="৳">৳241,000</b><span data-i18n="stat2"></span></div>
+        <div class="stat"><b data-count="47" data-suffix="%">47%</b><span data-i18n="stat3"></span></div>
       </div>
     </div>
 
@@ -45,22 +47,8 @@
 <!-- ========== SOCIAL PROOF TICKER ========== -->
 <div class="ticker"><div class="ticker-track" id="tickerTrack"></div></div>
 
-<!-- ========== HOW IT WORKS ========== -->
-<section class="section" id="how">
-  <div class="wrap">
-    <div class="section-head reveal"><div>
-      <h2 data-i18n="how_title"></h2><div class="sub" data-i18n="how_sub"></div>
-    </div></div>
-    <div class="steps">
-      <div class="step reveal" style="--d:0s"><span class="num">1</span><div class="ico">🛒</div><h3 data-i18n="how1t"></h3><p data-i18n="how1p"></p></div>
-      <div class="step reveal" style="--d:.12s"><span class="num">2</span><div class="ico">👥</div><h3 data-i18n="how2t"></h3><p data-i18n="how2p"></p></div>
-      <div class="step reveal" style="--d:.24s"><span class="num">3</span><div class="ico">🚚</div><h3 data-i18n="how3t"></h3><p data-i18n="how3p"></p></div>
-    </div>
-  </div>
-</section>
-
 <!-- ========== GROUP DEALS ========== -->
-<section class="section" id="deals" style="padding-top:8px">
+<section class="section" id="deals" style="padding-top:24px">
   <div class="wrap">
     <div class="section-head reveal"><div>
       <h2>🔥 <span data-i18n="deals_title"></span></h2><div class="sub" data-i18n="deals_sub"></div>
@@ -77,6 +65,163 @@
     </div></div>
     <div class="chips" id="catChips"></div>
     <div class="grid" id="prodGrid" style="margin-top:18px"></div>
+  </div>
+</section>
+
+<!-- ========== TRACTION (proof band) ========== -->
+<section class="trc-band" id="traction">
+  <div class="wrap">
+    <div class="trc-head reveal">
+      <div class="eyebrow eyebrow-light"><span class="e-dot"></span> <span data-i18n="trc_eyebrow"></span></div>
+      <h2 data-i18n="trc_title"></h2>
+      <p data-i18n="trc_sub"></p>
+    </div>
+    <div class="trc-grid">
+      <div class="trc-card reveal" style="--d:0s">
+        <div class="trc-ic">👥</div>
+        <b data-count="75000" data-suffix="+">75,000+</b>
+        <span data-i18n="trc_users"></span>
+        <small data-i18n="trc_growth_note"></small>
+      </div>
+      <div class="trc-card reveal" style="--d:.08s">
+        <div class="trc-ic">🌾</div>
+        <b data-count="500" data-suffix="+">500+</b>
+        <span data-i18n="trc_farmers"></span>
+      </div>
+      <div class="trc-card reveal" style="--d:.16s">
+        <div class="trc-ic">💚</div>
+        <b data-count="68" data-suffix="%">68%</b>
+        <span data-i18n="trc_ret"></span>
+      </div>
+      <div class="trc-card reveal" style="--d:.24s">
+        <div class="trc-ic">📦</div>
+        <b data-count="15000" data-suffix="+">15,000+</b>
+        <span data-i18n="trc_orders"></span>
+      </div>
+    </div>
+    <div class="trc-zones reveal">
+      <div class="trc-zones-l"><span class="trc-big">4</span> <span data-i18n="trc_zones_v"></span></div>
+      <div class="trc-zones-r">
+        <span class="zpill"><span class="live-dot"></span>Banasree</span>
+        <span class="zpill"><span class="live-dot"></span>Rampura</span>
+        <span class="zpill"><span class="live-dot"></span>Aftabnagar</span>
+        <span class="zpill"><span class="live-dot"></span>Mirpur</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PARTNER / SOCIAL PROOF ========== -->
+<section class="section partners" id="partners" style="padding-bottom:8px">
+  <div class="wrap">
+    <div class="section-head reveal" style="justify-content:center;text-align:center;flex-direction:column;gap:6px">
+      <div class="eyebrow"><span class="e-dot"></span> <span data-i18n="prt_eyebrow"></span></div>
+      <h2 data-i18n="prt_title"></h2>
+      <div class="sub" data-i18n="prt_sub"></div>
+    </div>
+    <div class="logo-strip reveal">
+      <div class="logo-tile"><img src="assets/logos/ifarmer.png" alt="iFarmer"><span>iFarmer</span></div>
+      <div class="logo-tile"><img src="assets/logos/barikoi.png" alt="Barikoi"><span>Barikoi</span></div>
+      <div class="logo-tile"><img class="lt-wide" src="assets/logos/jatri.svg" alt="Jatri"><span>Jatri</span></div>
+      <div class="logo-tile"><img src="assets/logos/medeasy.svg" alt="MedEasy"><span>MedEasy</span></div>
+      <div class="logo-tile txt"><span class="lt-name">Shomvob</span><span>Shomvob</span></div>
+      <div class="logo-tile txt"><span class="lt-name">Palki</span><span>Palki</span></div>
+      <div class="logo-tile txt"><span class="lt-name">PulseTech</span><span>PulseTech</span></div>
+      <div class="logo-tile txt"><span class="lt-name">Chhaya</span><span>Chhaya</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="section" id="how">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <h2 data-i18n="how_title"></h2><div class="sub" data-i18n="how_sub"></div>
+    </div></div>
+    <div class="steps">
+      <div class="step reveal" style="--d:0s"><span class="num">1</span><div class="ico">🛒</div><h3 data-i18n="how1t"></h3><p data-i18n="how1p"></p></div>
+      <div class="step reveal" style="--d:.12s"><span class="num">2</span><div class="ico">👥</div><h3 data-i18n="how2t"></h3><p data-i18n="how2p"></p></div>
+      <div class="step reveal" style="--d:.24s"><span class="num">3</span><div class="ico">🚚</div><h3 data-i18n="how3t"></h3><p data-i18n="how3p"></p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SCALE: DHAKA MAP + GROWTH ========== -->
+<section class="section scale" id="scale" style="padding-top:8px">
+  <div class="wrap">
+    <div class="section-head reveal"><div>
+      <div class="eyebrow"><span class="e-dot"></span> <span data-i18n="map_eyebrow"></span></div>
+      <h2 data-i18n="map_title"></h2><div class="sub" data-i18n="map_sub"></div>
+    </div></div>
+    <div class="scale-grid">
+      <!-- highlighted delivery zones -->
+      <div class="zones-wrap reveal">
+        <div class="zones-head">
+          <span><span class="live-dot"></span> <b data-i18n="map_zones_h"></b></span>
+          <span class="zones-count">4 <span data-i18n="map_live"></span></span>
+        </div>
+        <div class="zones-grid">
+          <div class="zone-hi"><span class="zh-dot"></span><b>Banasree</b><span class="zh-tag" data-i18n="map_live"></span></div>
+          <div class="zone-hi"><span class="zh-dot"></span><b>Rampura</b><span class="zh-tag" data-i18n="map_live"></span></div>
+          <div class="zone-hi"><span class="zh-dot"></span><b>Aftabnagar</b><span class="zh-tag" data-i18n="map_live"></span></div>
+          <div class="zone-hi"><span class="zh-dot"></span><b>Mirpur</b><span class="zh-tag" data-i18n="map_live"></span></div>
+        </div>
+        <div class="zones-next">
+          <span class="zn-label" data-i18n="map_next_h"></span>
+          <div class="zn-pills">
+            <span class="zn-pill">Uttara</span>
+            <span class="zn-pill">Dhanmondi</span>
+            <span class="zn-pill">Gulshan</span>
+            <span class="zn-pill">Bashundhara</span>
+            <span class="zn-pill">Badda</span>
+          </div>
+        </div>
+      </div>
+      <!-- growth curve -->
+      <div class="growth-wrap reveal" style="--d:.12s">
+        <div class="growth-top">
+          <span class="growth-badge">📈 14×</span>
+          <div><b data-i18n="trc_growth_l"></b><small data-i18n="trc_growth_note"></small></div>
+        </div>
+        <svg class="growth-chart" viewBox="0 0 340 190" preserveAspectRatio="none" role="img" aria-label="User growth curve">
+          <defs>
+            <linearGradient id="grArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#4cbf42" stop-opacity=".38"/>
+              <stop offset="100%" stop-color="#4cbf42" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <path class="gr-area" d="M10,160.6 L57,156.9 L104,151.3 L151,139.1 L198,128.8 L245,106.3 L292,81.9 L330,29.4 L330,175 L10,175 Z" fill="url(#grArea)"/>
+          <path class="gr-line" d="M10,160.6 L57,156.9 L104,151.3 L151,139.1 L198,128.8 L245,106.3 L292,81.9 L330,29.4" fill="none"/>
+          <circle class="gr-end" cx="330" cy="29.4" r="6"/>
+        </svg>
+        <div class="growth-axis"><span>Oct '24</span><span>75,000</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FARMER STORY ========== -->
+<section class="section farmer" id="farmer" style="padding-top:8px">
+  <div class="wrap">
+    <div class="farmer-card reveal">
+      <div class="farmer-media">
+        <img src="assets/team/farmer-tota.png" alt="Tota Mia, smallholder farmer in Bogura">
+        <div class="farmer-id">
+          <b data-i18n="frm_name"></b>
+          <span data-i18n="frm_role"></span>
+        </div>
+      </div>
+      <div class="farmer-body">
+        <div class="eyebrow"><span class="e-dot"></span> <span data-i18n="frm_eyebrow"></span></div>
+        <h2 data-i18n="frm_title"></h2>
+        <blockquote data-i18n="frm_quote"></blockquote>
+        <div class="farmer-proof">
+          <div><b data-i18n="frm_p1t"></b><span data-i18n="frm_p1s"></span></div>
+          <div><b data-i18n="frm_p2t"></b><span data-i18n="frm_p2s"></span></div>
+          <div><b data-i18n="frm_p3t"></b><span data-i18n="frm_p3s"></span></div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -102,6 +247,43 @@
       <h2 data-i18n="tstm_title"></h2><div class="sub" data-i18n="tstm_sub"></div>
     </div></div>
     <div class="tstm-grid" id="tstmGrid"></div>
+  </div>
+</section>
+
+<!-- ========== OUR STORY / FOUNDERS (hidden for now — re-enable by removing display:none) ========== -->
+<section class="section our-story" id="our-story" style="padding-top:8px;display:none">
+  <div class="wrap">
+    <div class="section-head reveal" style="justify-content:center;text-align:center;flex-direction:column;gap:6px">
+      <div class="eyebrow"><span class="e-dot"></span> <span data-i18n="team_eyebrow"></span></div>
+      <h2 data-i18n="team_title"></h2>
+      <div class="sub" style="max-width:40rem" data-i18n="team_sub"></div>
+    </div>
+    <div class="founders">
+      <div class="founder reveal">
+        <div class="founder-photo"><img src="assets/team/foysal.png" alt="Foysal Rabby, CEO & Founder"></div>
+        <div class="founder-info">
+          <b>Foysal Rabby</b>
+          <span class="founder-role" data-i18n="team_foysal_role"></span>
+          <p data-i18n="team_foysal_bio"></p>
+          <a class="li-btn" href="https://www.linkedin.com/company/sharedealnow/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            <span data-i18n="team_linkedin"></span>
+          </a>
+        </div>
+      </div>
+      <div class="founder reveal" style="--d:.1s">
+        <div class="founder-photo"><img src="assets/team/omer.png" alt="Md. Omer Arafat, CTO & Co-Founder"></div>
+        <div class="founder-info">
+          <b>Md. Omer Arafat</b>
+          <span class="founder-role" data-i18n="team_omer_role"></span>
+          <p data-i18n="team_omer_bio"></p>
+          <a class="li-btn" href="https://www.linkedin.com/company/sharedealnow/" target="_blank" rel="noopener">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.13 1.45-2.13 2.94v5.67H9.35V9h3.42v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.55V9h3.57v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.72v20.56C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.72V1.72C24 .77 23.2 0 22.22 0z"/></svg>
+            <span data-i18n="team_linkedin"></span>
+          </a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -135,6 +317,32 @@
         <a class="btn btn-dark" href="https://play.google.com/store/apps/details?id=com.selefe.selefe" target="_blank" rel="noopener">▶ <span data-i18n="app_cta"></span></a>
       </div>
       <div style="font-size:5rem;text-align:center">📱</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INVESTORS ========== -->
+<section class="section investors" id="investors" style="padding-top:8px">
+  <div class="wrap">
+    <div class="inv-card reveal">
+      <div class="inv-left">
+        <div class="eyebrow eyebrow-light"><span class="e-dot"></span> <span data-i18n="inv_eyebrow"></span></div>
+        <h2 data-i18n="inv_title"></h2>
+        <p data-i18n="inv_p"></p>
+        <div class="inv-cta">
+          <a class="btn btn-primary btn-lg" href="assets/ShareDeal-PitchDeck.pdf" download target="_blank" rel="noopener">⬇ <span data-i18n="inv_cta_deck"></span></a>
+          <a class="btn btn-ghost-light btn-lg" href="tel:+8801314734122" data-i18n="inv_cta_call"></a>
+        </div>
+        <div class="inv-contact">
+          <a href="mailto:foysal@sharedealnow.com">✉ foysal@sharedealnow.com</a>
+          <a href="tel:+8801314734122">📞 +880 1314 734122</a>
+        </div>
+      </div>
+      <div class="inv-stats">
+        <div class="inv-stat"><b>$8.5B</b><span data-i18n="inv_s1"></span></div>
+        <div class="inv-stat"><b>14×</b><span data-i18n="inv_s2"></span></div>
+        <div class="inv-stat"><b>$215K</b><span data-i18n="inv_s3"></span></div>
+      </div>
     </div>
   </div>
 </section>
@@ -243,15 +451,8 @@ $$('.faq-item').forEach(item => $('.faq-q', item).onclick = () => {
   a.style.maxHeight = open ? a.scrollHeight + 'px' : 0;
 });
 
-/* animated hero stats */
-$$('[data-count]').forEach(el => {
-  const io = new IntersectionObserver(es => es.forEach(e => {
-    if (!e.isIntersecting) return;
-    countUp(el, Number(el.dataset.count), el.dataset.prefix || '', el.dataset.suffix || '');
-    io.disconnect();
-  }));
-  io.observe(el);
-});
+/* stat counters — real numbers visible immediately, no zero flash */
+initCounters();
 
 initReveals();
 initLazyImages();
